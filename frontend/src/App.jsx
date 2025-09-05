@@ -33,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <h1>Frontend Service</h1>
+      <h2>Potato</h2>
       <p id="api-message">{apiMessage}</p>
       <button onClick={saveData}>Skicka data till API</button>
       <p id="status-message">{statusMessage}</p>
