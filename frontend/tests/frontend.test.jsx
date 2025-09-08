@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import App from '/src/App';
+import App from '../src/App';
 
 // Mock fetch globally
 beforeAll(() => {
@@ -31,7 +31,7 @@ test('sends data to API on button click', async () => {
   const button = screen.getByText(/Skicka data till API/i);
   fireEvent.click(button);
 
-  await waitFor(() => {
+  await waitFor(( => {
     const statusMessage = screen.getByText(/Data sparad med ID: 123/i);
     expect(statusMessage).toBeInTheDocument();
   });
