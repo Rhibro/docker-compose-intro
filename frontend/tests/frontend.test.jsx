@@ -31,7 +31,7 @@ test('sends data to API on button click', async () => {
   const button = screen.getByText(/Skicka data till API/i);
   fireEvent.click(button);
 
-  await waitFor(( => {
+  await waitFor(() => {
     const statusMessage = screen.getByText(/Data sparad med ID: 123/i);
     expect(statusMessage).toBeInTheDocument();
   });
