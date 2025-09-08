@@ -21,6 +21,6 @@ describe('API Endpoints', () => {
     expect(response.statusCode).toBe(200);
 
     // Kontrollerar att meddelandet stämmer
-    expect(response.body.message).toBe('Hello from the API!');
+    expect(response.bodymessage).toBe('Hello from the API!');
   });
 });
