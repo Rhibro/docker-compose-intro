@@ -3,12 +3,14 @@ const express = require('express');
 const { Pool } = require('pg');
 
 const app = express();
+// Use DATABASE_URL if provided, otherwise fall back to individual vars
 const pool = new Pool({
-  user: 'postgres',
-  host: 'db',
-  database: 'my_database',
-  password: 'my-secret-pw',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL || undefined,
+  user: process.env.POSTGRES_USER || 'postgres',
+  host: process.env.DB_HOST || 'db',
+  database: process.env.POSTGRES_DB || 'my_database',
+  password: process.env.POSTGRES_PASSWORD || 'my-secret-pw',
+  port: process.env.DB_PORT || 5432,
 });
 
 app.use(express.json());
@@ -22,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from the API!' });
+  res.json({ message: 'Hello from the API v1.1.0!' });
 });
 
 app.post('/api/data', async (req, res) => {
