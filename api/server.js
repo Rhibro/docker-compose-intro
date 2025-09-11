@@ -1,4 +1,3 @@
-// server.js
 const app = require('./app');
 const port = 3000;
 
@@ -7,3 +6,4 @@ const server = app.listen(port, "0.0.0.0", () => {
 });
 
 module.exports = server; // export server so tests can close it
+
