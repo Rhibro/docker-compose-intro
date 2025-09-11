@@ -1,29 +1,65 @@
-services: 
-  db:
+services: # top-level key all containers are defined here
+  db: # runs Postgres database from postgres:14-alpine image
     image: postgres:14-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "my-secret-pw"
-      POSTGRES_DB: "my_database"
-    volumes:
+    environment: # injects database credentials pulled from .env file
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes: # runs initialization scripts and persists data
       - ./db:/docker-entrypoint-initdb.d
       - db-data:/var/lib/postgresql/data
     
-  api:
-    build: ./api
+  api: # builds from the api docker file
+    build: 
+      context: ./api
+      target: runtime # explicitly build the runtime stage
+    image: rhibro/api:v1.0.0 # tags the image so it can be pushed to docker hub
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://postgres:my-secret-pw@db:5432/my_database
-    depends_on:
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on: # depends on the database service
       - db
 
-  frontend:
-    build: ./frontend
+# development frontend
+  frontend-dev: # builds from the frontend docker file
+    build:
+      context: ./frontend
+      target: dev
     ports:
-      - "80:80"
+      - "5173:5173"
     depends_on:
       - api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # avoid overwriting installed modules
+
+ # production frontend
+  frontend:
+    build:
+      context: ./frontend
+      target: runtime
+    image: rhibro/frontend:v1.0.0
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+  cache:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  tester:
+    build: 
+     context: ./api
+     target: builder # use the builder stage to run tests 
+    image: rhibro/api:test
+    command: ["npm", "test"] # keeps it running 
+    depends_on:
+     - db
+     - api
+     - cache 
 
 volumes:
   db-data:
