@@ -1,11 +1,7 @@
-# FROM nginx:alpine
-
-# COPY dist /usr/share/nginx/html
-
-# EXPOSE 80
+# ----- Builder Stage -----
 
 # use node instead of nginx (so we can run npm commands)
-FROM node:22-alpine
+FROM node:22-alpine AS builder 
 
 # set working directory
 WORKDIR /app
@@ -14,11 +10,28 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install 
 
-# copy the rest of the project files
+# copy source and build
+COPY . .
+RUN npm run build 
+
+# ---- Development Stage ----
+FROM node:22-alpine AS dev
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
 COPY . .
 
-# expose the dev server port (default is 5173)
 EXPOSE 5173
-
-# start the dev server
 CMD ["npm", "run", "dev", "--", "--host"]
+
+
+# ---- Production Runtime Stage ----
+FROM nginx:alpine AS runtime
+
+# Copy built frontend from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
