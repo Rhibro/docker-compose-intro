@@ -1,0 +1,26 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  AZURE_DB_HOST: '$(AZURE_DB_HOST)'   # set these in pipeline variables / variable group
+  AZURE_DB_PORT: '5432'
+  AZURE_DB_NAME: '$(AZURE_DB_NAME)'
+  AZURE_DB_USER: '$(AZURE_DB_USER)'
+
+steps:
+- checkout: self
+
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y postgresql-client
+  displayName: 'Install PostgreSQL client'
+
+- script: |
+    echo "Running init.sql against ${AZURE_DB_HOST}/${AZURE_DB_NAME} as ${AZURE_DB_USER}"
+    PGPASSWORD="${AZURE_DB_PASSWORD}" \
+      psql "host=${AZURE_DB_HOST} port=${AZURE_DB_PORT} dbname=${AZURE_DB_NAME} user=${AZURE_DB_USER} sslmode=require" -f db/init.sql
+  env:
+    AZURE_DB_PASSWORD: $(AZURE_DB_PASSWORD)
+  displayName: 'Run init.sql'
