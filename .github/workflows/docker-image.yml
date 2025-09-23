@@ -35,6 +35,12 @@ jobs:
         run: |
           docker push ${{ secrets.ACR_URL }}/docker-compose-intro:latest
 
+      - name: Deploy to azure app Services
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'rhiswebapp'
+          images: '${{ secrets.ACR_URL }}/docker-compose-intro:latest'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
 
  
