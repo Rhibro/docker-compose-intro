@@ -36,3 +36,7 @@ jobs:
       - name: Push Docker image to ACR
         run: |
           docker push ${{ secrets.ACR_URL }}/my-image:latest
+
+
+
+          # test commit
