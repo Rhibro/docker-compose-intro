@@ -28,12 +28,12 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.ACR_URL }}/docker-compose-intro-build:latest .
+          docker build -t ${{ secrets.ACR_URL }}/docker-compose-intro:latest .
 
       # Push Docker image to ACR
       - name: Push Docker image to ACR
         run: |
-          docker push ${{ secrets.ACR_URL }}/docker-compose-intro-build:latest
+          docker push ${{ secrets.ACR_URL }}/docker-compose-intro:latest
 
 
 
