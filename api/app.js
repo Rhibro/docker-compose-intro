@@ -1,6 +1,7 @@
 // app.js
 const express = require('express');
 const { Pool } = require('pg');
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 // Use DATABASE_URL if provided, otherwise fall back to individual vars
@@ -27,6 +28,16 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
 });
 
+app.get('/db-test', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ time: result.rows[0].now });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database error');
+  }
+});
+
 app.post('/api/data', async (req, res) => {
   try {
     const { message } = req.body;
@@ -42,6 +53,10 @@ app.post('/api/data', async (req, res) => {
     console.error('Failed to save data:', error);
     res.status(500).json({ status: 'error', message: 'Failed to save data' });
   }
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`API running on port ${PORT}`);
 });
 
 module.exports = app;
