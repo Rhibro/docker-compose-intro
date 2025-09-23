@@ -26,7 +26,7 @@ jobs:
         with:
           registry: ${{ secrets.ACR_URL }}
           username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          password: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Build Docker image
         run: |
