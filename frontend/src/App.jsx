@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import Button from './Button';
 
 function App() {
   const [apiMessage, setApiMessage] = useState('Laddar API-meddelande...');
@@ -37,6 +38,7 @@ function App() {
       <p id="api-message">{apiMessage}</p>
       <button onClick={saveData}>Skicka data till API</button>
       <p id="status-message">{statusMessage}</p>
+      <Button text="Click Me" onClick={() => alert('Button clicked!')} />
     </div>
   );
 }
