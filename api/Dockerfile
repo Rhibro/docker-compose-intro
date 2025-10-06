@@ -22,8 +22,10 @@ COPY package*.json ./
 RUN npm install --omit=dev
 
 # Copy only built/needed files from builder
+COPY --from=builder /app ./
 COPY --from=builder /app/server.js ./server.js
-COPY --from=builder /app/app.js ./app.js  
+COPY --from=builder /app/app.js ./app.js 
+COPY --from=builder /app/db.js ./db.js  
 
 EXPOSE 3000
 CMD ["node", "server.js"]
