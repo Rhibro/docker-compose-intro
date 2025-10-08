@@ -1,6 +1,7 @@
 const app = require('./app');
 const PORT = process.env.PORT || 3000;
 const pool = require('./db');
+const HOST = '0.0.0.0';
 
 app.get('/db-test', async (req, res) => {
   try {
@@ -12,9 +13,16 @@ app.get('/db-test', async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, "0.0.0.0", () => {
-  console.log(`API is running on http://localhost:${PORT}`);
-});
+let server;
+if (require.main === module) {
+  server = app.listen(PORT, HOST, () => {
+    console.log(`API is running on http://${HOST}:${PORT}`);
+  });
+}
+
+// const server = app.listen(PORT, "0.0.0.0", () => {
+//   console.log(`API is running on http://localhost:${PORT}`);
+// });
 
 module.exports = server; // export server so tests can close it
 
