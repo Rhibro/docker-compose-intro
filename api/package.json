@@ -21,5 +21,8 @@
     "jest": "^30.1.3",
     "nodemon": "^3.1.0",
     "supertest": "^7.1.4"
+  },
+  "jest": {
+    "forceExit": true
   }
 }
