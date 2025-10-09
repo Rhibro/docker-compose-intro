@@ -24,6 +24,6 @@ if (require.main === module) {
 //   console.log(`API is running on http://localhost:${PORT}`);
 // });
 
-module.exports = server; // export server so tests can close it
+module.exports = {app, pool, server}; // export server so tests can close it
 
 //save for test
