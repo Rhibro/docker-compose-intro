@@ -8,8 +8,9 @@ beforeAll(() => {
   server = app.listen(4000); // start server on test port
 });
 
-afterAll((done) => {
-  server.close(done); // close server so Jest exits cleanly
+afterAll(async () => {
+   await server.close(); // close server so Jest exits cleanly
+  await pool.end(); // close DB pool
 });
 
 describe('API Endpoints', () => {
