@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const { Pool } = require('pg');
 const PORT = process.env.PORT || 3000;
@@ -15,6 +14,8 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+
+// CORS middleware
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -24,10 +25,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root route
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
 });
 
+// API route
+app.get('/api', (req, res) => {
+  res.json({message: 'Hello form the API in app.js!'});
+});
+
+//Database test route
 app.get('/db-test', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
@@ -38,6 +46,7 @@ app.get('/db-test', async (req, res) => {
   }
 });
 
+//Data inserstion route
 app.post('/api/data', async (req, res) => {
   try {
     const { message } = req.body;
@@ -55,6 +64,7 @@ app.post('/api/data', async (req, res) => {
   }
 });
 
+//Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`API running on port ${PORT}`);
 });
