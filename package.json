@@ -1,4 +1,7 @@
-{"scripts": {
-  "start": "node server.js"
-}
+{
+  "name": "docker-compose-intro",
+  "private": true,
+  "scripts": {
+    "start": "npm start --prefix api"
+  }
 }
