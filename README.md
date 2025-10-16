@@ -1,6 +1,4 @@
-# Task 5: Understanding pipeline failures
-
-## 🎯 Goal: Learn how to debug broken pipelines.
+# Understanding pipeline failures
 
 1. How you found the error
    - I pushed the changes and saw that the test failed
