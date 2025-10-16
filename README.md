@@ -19,3 +19,8 @@
 
 <img width="1600" height="852" alt="URL preview" src="https://github.com/user-attachments/assets/8aa9be1b-3fcd-42ae-8177-ec0650db3c01" />
 <img width="1600" height="852" alt="UI change" src="https://github.com/user-attachments/assets/41a7e854-ccff-49e2-956f-69049e2e4869" />
+
+# Establish Staging - The Permanent Test Environment
+
+Here is the link to the permanent Staging URL: https://red-hill-0844a3903.1.azurestaticapps.net/
+This link should be shared with stakeholders and product owners because it is more stable. The url preview is temporary and is mainly for code reviews. 
