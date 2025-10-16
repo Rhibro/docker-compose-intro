@@ -9,8 +9,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await pool.end(); // close database connection
-  server.close(); // close server
+   await server.close(); // close server so Jest exits cleanly
+  await pool.end(); // close DB pool
 });
 
 // afterAll((done) => {

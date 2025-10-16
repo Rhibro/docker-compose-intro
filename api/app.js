@@ -24,7 +24,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// API route
+app.get('/', (req, res) => {
+  res.json({message: 'Welcome to API root!!!'});
+});
+
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
 });

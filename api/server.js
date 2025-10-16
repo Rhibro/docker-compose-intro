@@ -26,5 +26,8 @@ if (require.main === module) {
 // });
 
 
+module.exports = {app, pool, server}; // export server so tests can close it
+
+
 // // module.exports = server; // export server so tests can close it
 // module.exports = {app, pool};
