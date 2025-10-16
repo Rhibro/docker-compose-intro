@@ -14,3 +14,8 @@
 3. How you verified the pipeline was green
    - I fixed the broken code pushed the changes and went back to the log to check that everything run smoothly
 <img width="1600" height="852" alt="Skärmbild 2025-09-08 165101" src="https://github.com/user-attachments/assets/c424d2e4-1972-4e8c-93fe-59143d370ef3" />
+
+# The First Step to Edge - Preview Deployments
+
+<img width="1600" height="852" alt="URL preview" src="https://github.com/user-attachments/assets/8aa9be1b-3fcd-42ae-8177-ec0650db3c01" />
+<img width="1600" height="852" alt="UI change" src="https://github.com/user-attachments/assets/41a7e854-ccff-49e2-956f-69049e2e4869" />
