@@ -29,3 +29,7 @@ This link should be shared with stakeholders and product owners because it is mo
 
 I chose Vercel for my production environment due to its seamless integration with GitHub, which allows for automatic deployments from my repository. Vercel's optimization for modern frontend frameworks ensures that my application performs efficiently. The global CDN enhances load times, and the ease of use provides a great developer experience. The ability to preview deployments before merging changes also facilitates better collaboration and quality assurance.
 
+# Delivery to Production - (CD)
+
+Live URL: https://docker-compose-intro-bcifio8tj-rhis-projects-13ee971c.vercel.app/
+<img width="800" height="426" alt="image" src="https://github.com/user-attachments/assets/a19e8824-af45-4206-950b-56bc8527808f" />
