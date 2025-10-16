@@ -1,10 +1,10 @@
 const request = require('supertest');
-const { app, pool } = require('../server');
+const { app, pool } = require('../app');
 
 let server;
 
 
-beforeAll(() => {
+beforeAll(async () => {
   server = app.listen(4000); // start server on test port
 });
 
@@ -12,6 +12,10 @@ afterAll(async () => {
    await server.close(); // close server so Jest exits cleanly
   await pool.end(); // close DB pool
 });
+
+// afterAll((done) => {
+//   server.close(done); // close server so Jest exits cleanly
+// });
 
 describe('API Endpoints', () => {
   it('should return "Hello from the API!" on GET /api', async () => {
@@ -24,4 +28,5 @@ describe('API Endpoints', () => {
     // Kontrollerar att meddelandet stämmer
     expect(response.body.message).toBe('Hello from the API!');
   });
+
 });

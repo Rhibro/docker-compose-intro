@@ -1,1 +1,7 @@
-{}
+{
+  "name": "docker-compose-intro",
+  "private": true,
+  "scripts": {
+    "start": "node api/server.js"
+  }
+}
