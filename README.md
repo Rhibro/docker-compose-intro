@@ -33,3 +33,11 @@ I chose Vercel for my production environment due to its seamless integration wit
 
 Live URL: https://docker-compose-intro-bcifio8tj-rhis-projects-13ee971c.vercel.app/
 <img width="800" height="426" alt="image" src="https://github.com/user-attachments/assets/a19e8824-af45-4206-950b-56bc8527808f" />
+
+# Environemt Separation for Backend (Isolation)
+
+In production applications, it is important to separate environments to ensure stability and security. 
+- **API-PROD** is isolated from **API-DEV** to prevent any potential issues in development from affecting the live application.
+- This separation allows for safe testing and development without the risk of introducing bugs or vulnerabilities into the production environment.
+- It also allows easier management of resources and configurations specific to each environment.
+
