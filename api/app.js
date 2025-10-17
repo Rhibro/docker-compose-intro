@@ -24,23 +24,79 @@ app.use((req, res, next) => {
   next();
 });
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Gets the status of the API and returns a greeting
+ *     description: Returns a welcome message to indicate that the API is running (health check)
+ *     tags:
+ *       - Status
+ *     responses:
+ *       '200':
+ *         description: Successful response with welcome message
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Welcome to API root!!!
+ */
+
 app.get('/', (req, res) => {
   res.json({message: 'Welcome to API root!!!'});
 });
+
+
+/**
+ * @swagger
+ * /api:
+ *   get:
+ *     summary: Returns a simple API greeting
+ *     description: Basic test endpoint to confirm that the API route is accessible
+ *     tags:
+ *       - Status
+ *     responses:
+ *       '200':
+ *         description: Successful response with greeting message
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Hello from the API!
+ */
 
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the API!' });
 });
 
-app.get('/db-test', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Database error');
-  }
-});
+/**
+ * @swagger
+ * /db-test:
+ *   get:
+ *     summary: Tests database connectivity
+ *     description: Executes a simple query (SELECT NOW()) to verify the database connection and returns the current timestamp.
+ *     tags:
+ *       - Database
+ *     responses:
+ *       '200':
+ *         description: Successful response with current database time
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 time:
+ *                   type: string
+ *                   example: "2025-10-17T12:34:56.789Z"
+ *       '500':
+ *         description: Database error
+ */
 
 //Database test route
 app.get('/db-test', async (req, res) => {
@@ -52,6 +108,44 @@ app.get('/db-test', async (req, res) => {
     res.status(500).send('Database error');
   }
 });
+
+/**
+ * @swagger
+ * /api/data:
+ *   post:
+ *     summary: Inserts a new message into the database
+ *     description: Creates a `messages` table (if it doesn't exist) and inserts a new message record into it.
+ *     tags:
+ *       - Data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - message
+ *             properties:
+ *               message:
+ *                 type: string
+ *                 example: "Hello database!"
+ *     responses:
+ *       '200':
+ *         description: Data successfully inserted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *       '500':
+ *         description: Failed to save data
+ */
 
 //Data inserstion route
 app.post('/api/data', async (req, res) => {
