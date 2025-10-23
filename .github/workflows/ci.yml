@@ -10,7 +10,7 @@ jobs:
     build-and-test: 
         runs-on: ubuntu-latest
         services: 
-            # API services here
+
             api: 
                 image: node:18
                 ports: 
@@ -45,8 +45,3 @@ jobs:
                 cd frontend 
                 npm install
                 npm test
-
-
-
-# test to see if the build works on github actions once more
-   # npm test
