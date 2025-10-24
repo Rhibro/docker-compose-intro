@@ -38,6 +38,14 @@ jobs:
               working-directory: ./api
               run: npm run docs:generate
 
+            - name: Install Redoc CLI
+              working-directory: ./api
+              run: npm install --save-dev redoc-cli
+
+            - name: Generate HTML documentation
+              working-directory: ./api
+              run: npx redoc-cli bundle docs/openapi.json -o docs/index.html
+
             - name: Upload OpenAPI docs as CI artifact
               uses: actions/upload-artifact@v4
               with:
