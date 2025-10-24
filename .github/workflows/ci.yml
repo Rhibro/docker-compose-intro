@@ -34,6 +34,10 @@ jobs:
               working-directory: ./api
               run: npm test
 
+            - name: Generate API Documentation
+              working-directory: ./api
+              run: npm run generate-doc
+
             # Frontend services below
             - name: Build Frontend Docker Image
               run: |
