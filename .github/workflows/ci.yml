@@ -38,6 +38,12 @@ jobs:
               working-directory: ./api
               run: npm run docs:generate
 
+            - name: Upload OpenAPI docs as CI artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: openapi-docs
+                path: ./api/docs
+        
             # Frontend services below
             - name: Build Frontend Docker Image
               run: |
@@ -64,6 +70,25 @@ jobs:
                 cd frontend 
                 npm install
                 npm test
+
+    deploy-docs:
+            needs: build-and-test
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout code
+                uses: actions/checkout@v4
+
+              - name: Download docs artifact
+                uses: actions/download-artifact@v4
+                with:
+                  name: openapi-docs
+                  path: ./api/docs
+
+              - name: Deploy API docs to GitHub Pages
+                uses: peaceiris/actions-gh-pages@v3
+                with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./api/docs
 
 
 # test to see if the build works on github actions once more
