@@ -10,7 +10,7 @@ jobs:
     build-and-test: 
         runs-on: ubuntu-latest
         services: 
-       
+
             api: 
                 image: node:18
                 ports: 
@@ -65,4 +65,5 @@ jobs:
                 npm test
 
 
-
+# test to see if the build works on github actions once more
+   # npm test
