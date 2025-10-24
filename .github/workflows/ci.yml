@@ -30,6 +30,34 @@ jobs:
               working-directory: ./api
               run: npm install
 
+            - name: Run tests
+              working-directory: ./api
+              run: npm test
+
+            - name: Generate API Documentation
+              working-directory: ./api
+              run: npm run docs:generate
+
+            - name: Install Redoc CLI
+              working-directory: ./api
+              run: npm install --save-dev redoc-cli
+
+            - name: Generate HTML documentation
+              working-directory: ./api
+              run: npx redoc-cli bundle docs/openapi.json -o docs/index.html
+
+            - name: Upload OpenAPI docs as CI artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: openapi-docs
+                path: ./api/docs
+        
+            # Frontend services below
+            - name: Build Frontend Docker Image
+              run: |
+                cd frontend
+                docker build -t frontend:ci .
+
             - name: Cache Node.js modules for Frontend
               uses: actions/cache@v3
               with: 
@@ -39,16 +67,6 @@ jobs:
                 key: ${{ runner.os}}-frontend-${{ hashFiles('**/frontend/package-lock.json') }}
                 restore-keys: |
                   ${{ runner.os}}-frontend-
-
-            - name: Run tests
-              working-directory: ./api
-              run: npm test
-
-            # Frontend services below
-            - name: Build Frontend Docker Image
-              run: |
-                cd frontend
-                docker build -t frontend:ci .
 
             - name: Notification of Failure
               if: failure()
@@ -61,3 +79,25 @@ jobs:
                 npm install
                 npm test
 
+    deploy-docs:
+            needs: build-and-test
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout code
+                uses: actions/checkout@v4
+
+              - name: Download docs artifact
+                uses: actions/download-artifact@v4
+                with:
+                  name: openapi-docs
+                  path: ./api/docs
+
+              - name: Deploy API docs to GitHub Pages
+                uses: peaceiris/actions-gh-pages@v3
+                with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./api/docs
+
+
+# test to see if the build works on github actions once more
+   # npm test

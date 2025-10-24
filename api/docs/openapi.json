@@ -1,1 +1,160 @@
-{}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0.0",
+    "description": "Automatically generated API documentation from JSDoc comments"
+  },
+  "servers": [
+    {
+      "url": "/api"
+    },
+    {
+      "url": "http://localhost:3000/api"
+    },
+    {
+      "url": "https://rhiswebapp-fqgbcrewb2fmeub0.swedencentral-01.azurewebsites.net/"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Gets the status of the API and returns a greeting",
+        "description": "Returns a welcome message to indicate that the API is running (health check)",
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with welcome message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Welcome to API root!!!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api": {
+      "get": {
+        "summary": "Returns a simple API greeting",
+        "description": "Basic test endpoint to confirm that the API route is accessible",
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with greeting message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Hello from the API!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/db-test": {
+      "get": {
+        "summary": "Tests database connectivity",
+        "description": "Executes a simple query (SELECT NOW()) to verify the database connection and returns the current timestamp.",
+        "tags": [
+          "Database"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with current database time",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "string",
+                      "example": "2025-10-17T12:34:56.789Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database error"
+          }
+        }
+      }
+    },
+    "/api/data": {
+      "post": {
+        "summary": "Inserts a new message into the database",
+        "description": "Creates a `messages` table (if it doesn't exist) and inserts a new message record into it.",
+        "tags": [
+          "Data"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "message"
+                ],
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Hello database!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data successfully inserted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to save data"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}
