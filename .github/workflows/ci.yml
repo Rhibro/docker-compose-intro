@@ -26,9 +26,6 @@ jobs:
               with:
                 node-version: '20'
 
-            - name: Generate Documentation
-              run: npm run docs
-
             - name: Install dependencies
               working-directory: ./api
               run: npm install
