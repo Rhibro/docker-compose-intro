@@ -30,11 +30,31 @@ jobs:
               working-directory: ./api
               run: npm install
 
+            - name: Cache Node.js modules for API
+              uses: actions/cache@v3
+              with: 
+                path: |
+                  ~/.npm
+                  ./api/node_modules
+                key: ${{ runner.os }}-node-${{ hashFiles('**/api/package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-node-
+            
+            - name: Install dependencies if package.json changes
+              working-directory: ./api
+              run: |
+                if [ -f package.json ]; then
+                  npm ci
+                else
+                  echo "No changes in package.json"
+                fi
+
             - name: Run tests
               working-directory: ./api
               run: npm test
 
             - name: Generate API Documentation
+              if: needs.build-and-test.outputs.api_docs_changed == 'true'
               working-directory: ./api
               run: npm run docs:generate
 
@@ -68,6 +88,15 @@ jobs:
                 restore-keys: |
                   ${{ runner.os}}-frontend-
 
+            - name: Install dependencies if package.json changes
+              working-directory: ./frontend
+              run: |
+                if [ -f package.json ]; then
+                  npm ci
+                else
+                  echo "No changes in package.json"
+                fi
+
             - name: Notification of Failure
               if: failure()
               run: |
@@ -99,5 +128,4 @@ jobs:
                   publish_dir: ./api/docs
 
 
-# test to see if the build works on github actions once more
-   # npm test
+
