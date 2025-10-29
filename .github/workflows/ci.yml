@@ -128,5 +128,4 @@ jobs:
                   publish_dir: ./api/docs
 
 
-# test to see if the build works on github actions once more
-   # npm test
+
